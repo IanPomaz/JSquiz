@@ -36,5 +36,9 @@ var scoreForm = document.getElementById("score");
 addEventListener("click", startQuiz)
 
 function startQuiz() {
-    element.remove()
+    //remove the start button
+    startButton.classList.add("hide");
+    //remove the start element
+    var start = document.getElementById("start").remove();
+    
 }
