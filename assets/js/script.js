@@ -6,7 +6,7 @@ const startButton = document.getElementById('start-button');
 
 const questions = [ 
     {
-        Q: 'Quenstions 1',
+        Q: 'Question 1',
         A: ['a','b','c','d'],
         C: 'b'
     },
@@ -57,11 +57,46 @@ function startQuiz() {
 
 
 function showQuestion() {
-    const questionBox = document.getElementById('questions')
-    const currentQuestion = questions[questionCount]
+    const startBox = document.getElementById('start');
+        while (startBox.firstChild) {
+            startBox.removeChild(startBox.firstChild);
+    }
+    const questionBox = document.getElementById('questions');
+    const currentQuestion = questions[questionCount];
+
+    const questionText = document.createElement('h2');
+    questionText.textContent = currentQuestion.Q;
+    questionBox.appendChild(questionText);
+
+    const answerList = document.createElement('ul');
+    currentQuestion.A.forEach((answer) => {
+        const answerItem = document.createElement('button');
+        answerItem.textContent = answer;
+        answerList.appendChild(answerItem);
+        answerItem.addEventListener('click', () => checkAnswer(answer, currentQuestion.C));
+    });
+    questionBox.appendChild(answerList);
 }
 
 
-// function checkAnswer {
 
-// }
+function checkAnswer(selectedAnswer, correctAnswer) {
+    if (selectedAnswer === correctAnswer) {
+        questionCount++;
+        if (questionCount < questions.length) {
+            clearQuestion();
+            showQuestion();
+        } else {
+            endGame();
+        }
+    } else {
+        secondsLeft -= 10;
+    }
+}
+
+function clearQuestion() {
+    const questionContainer = document.getElementById('questions');
+    while (questionContainer.firstChild) {
+        questionContainer.removeChild(questionContainer.firstChild);
+    }
+}
