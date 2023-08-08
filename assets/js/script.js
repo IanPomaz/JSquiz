@@ -12,24 +12,24 @@ const questions = [
         C: 'function'
     },
     {
-        Q: 'Quenstions 2',
-        A: ['a','b','c','d'],
-        C: 'b'
+        Q: 'What are actions that can be performed on objects.',
+        A: ['methods','variables','properties','inits'],
+        C: 'variables'
     },
     {
-        Q: 'Quenstions 3',
-        A: ['a','b','c','d'],
-        C: 'b'
+        Q: 'Where doest JavaScript code go in an HTML document?',
+        A: ['<js>','<script>','<div>','<button>'],
+        C: '<js>'
     },
     {
-        Q: 'Quenstions 4',
-        A: ['a','b','c','d'],
-        C: 'b'
+        Q: 'How do you write greater than or equal to',
+        A: ['>=','<','!<','>=!'],
+        C: '>='
     },
     {
-        Q: 'Quenstions 5',
-        A: ['a','b','c','d'],
-        C: 'b'
+        Q: 'What does the "DOM" stand for in web development?',
+        A: ['Document Order Model', 'Data Object Model', 'Document Object Model', 'Digital Output Module'],
+        C: 'Document Object Model'
     }
 ]
 
@@ -135,7 +135,7 @@ function saveScore(initials, score) {
 }
 
 function displayHighScores() {
-    const hsList = document.getElementById('hslist');
+    var hsList = document.getElementById('hslist');
     hsList.innerHTML = ''; 
 
     highScores.forEach((scoreObj) => {
