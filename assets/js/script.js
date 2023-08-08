@@ -2,13 +2,14 @@ let secondsLeft = 60;
 let questionCount = 0;
 let score = document.getElementById('highscores');
 let timerDisplay = document.getElementById('time');
+let highScores = [];
 const startButton = document.getElementById('start-button');
 
 const questions = [ 
     {
-        Q: 'Question 1',
-        A: ['a','b','c','d'],
-        C: 'b'
+        Q: 'Which one of these is a block of code designed to perform a particular task.',
+        A: ['method','function','string','boolean'],
+        C: 'function'
     },
     {
         Q: 'Quenstions 2',
@@ -38,8 +39,9 @@ function timer() {
         secondsLeft--;
         timerDisplay.textContent = secondsLeft;
       
-        if (secondsLeft === 0 || questionCount === questions.length) {
+        if (secondsLeft <= 0 || questionCount === questions.length) {
             clearInterval(timerInterval);
+            endGame();
         }
     }, 1000);
 }
@@ -99,4 +101,46 @@ function clearQuestion() {
     while (questionContainer.firstChild) {
         questionContainer.removeChild(questionContainer.firstChild);
     }
+}
+
+function endGame() {
+    const questionContainer = document.getElementById('questions');
+    questionContainer.innerHTML = '';
+
+    const gameOverMessage = document.createElement('h2');
+    gameOverMessage.textContent = 'Game Over';
+
+    const scoreMessage = document.createElement('p');
+    scoreMessage.textContent = `Your final score: ${secondsLeft}`;
+
+    const initialsInput = document.createElement('input');
+    initialsInput.setAttribute('placeholder', 'Enter your initials');
+    initialsInput.setAttribute('maxlength', '3'); // Limit initials to 3 characters
+
+    const saveButton = document.createElement('button');
+    saveButton.textContent = 'Save Score';
+    saveButton.addEventListener('click', () => saveScore(initialsInput.value, secondsLeft));
+
+    questionContainer.appendChild(gameOverMessage);
+    questionContainer.appendChild(scoreMessage);
+    questionContainer.appendChild(initialsInput);
+    questionContainer.appendChild(saveButton);
+}
+
+function saveScore(initials, score) {
+
+    localStorage.setItem('highscore', JSON.stringify({ initials, score }));
+    highScores.push({ initials, score });
+    displayHighScores();
+}
+
+function displayHighScores() {
+    const hsList = document.getElementById('hslist');
+    hsList.innerHTML = ''; 
+
+    highScores.forEach((scoreObj) => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${scoreObj.initials}: ${scoreObj.score}`;
+        hsList.appendChild(listItem);
+    });
 }
